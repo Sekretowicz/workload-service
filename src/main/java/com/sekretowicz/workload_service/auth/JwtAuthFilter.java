@@ -13,7 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
-@Component
+//@Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -42,7 +42,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 return;
             }
 
-            // Устанавливаем Authentication без ролей
+            //Authentication without roles
             Authentication authentication = new UsernamePasswordAuthenticationToken(subject, null, List.of());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 

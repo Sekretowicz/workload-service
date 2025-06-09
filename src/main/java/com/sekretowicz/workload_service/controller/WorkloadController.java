@@ -1,10 +1,13 @@
 package com.sekretowicz.workload_service.controller;
 
 import com.sekretowicz.workload_service.dto.MonthlyWorkloadDto;
-import com.sekretowicz.workload_service.dto.WorkloadRequestDto;
+import com.sekretowicz.workload_service.dto.WorkloadDto;
+import com.sekretowicz.workload_service.model.TrainerWorkload;
 import com.sekretowicz.workload_service.service.WorkloadService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/workload")
@@ -16,8 +19,9 @@ public class WorkloadController {
         this.service = service;
     }
 
+    //It's not used in current task, because now we use ActiveMQ for communication
     @PostMapping
-    public ResponseEntity<Void> handle(@RequestBody WorkloadRequestDto dto) {
+    public ResponseEntity<Void> handle(@RequestBody WorkloadDto dto) {
         service.processWorkload(dto);
         return ResponseEntity.ok().build();
     }
@@ -28,8 +32,10 @@ public class WorkloadController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/hello")
-    public void sayHello() {
-        System.out.println("Hello from Workload Service!");
+    //Get all trainers
+    @GetMapping
+    public ResponseEntity<Map<String,TrainerWorkload>> getAll() {
+        Map<String, TrainerWorkload> response = service.getStorage();
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,8 +1,9 @@
 package com.sekretowicz.workload_service.service;
 
 import com.sekretowicz.workload_service.dto.MonthlyWorkloadDto;
-import com.sekretowicz.workload_service.dto.WorkloadRequestDto;
+import com.sekretowicz.workload_service.dto.WorkloadDto;
 import com.sekretowicz.workload_service.model.TrainerWorkload;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -12,15 +13,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class WorkloadService{
 
+    @Getter
     private final Map<String, TrainerWorkload> storage = new ConcurrentHashMap<>();
 
-    public void processWorkload(WorkloadRequestDto dto) {
+    public void processWorkload(WorkloadDto dto) {
         TrainerWorkload trainer = storage.computeIfAbsent(dto.getTrainerUsername(), username -> {
             TrainerWorkload t = new TrainerWorkload();
             t.setTrainerUsername(dto.getTrainerUsername());
             t.setFirstName(dto.getFirstName());
             t.setLastName(dto.getLastName());
-            t.setActive(dto.getIsActive());
+            t.setActive(dto.getActive());
             return t;
         });
 
