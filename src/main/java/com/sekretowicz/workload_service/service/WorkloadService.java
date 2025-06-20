@@ -5,7 +5,6 @@ import com.sekretowicz.workload_service.dto.WorkloadDto;
 import com.sekretowicz.workload_service.model.TrainerWorkload;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
-
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
