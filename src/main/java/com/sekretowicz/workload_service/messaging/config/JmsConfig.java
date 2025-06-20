@@ -10,7 +10,6 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
-
 import java.util.Map;
 
 @Configuration
@@ -26,7 +25,7 @@ public class JmsConfig {
         converter.setTargetType(MessageType.TEXT);
         converter.setObjectMapper(objectMapper);
 
-        converter.setTypeIdPropertyName("type");
+        converter.setTypeIdPropertyName("_type");
 
         converter.setTypeIdMappings(Map.of(
                 "Workload", WorkloadDto.class

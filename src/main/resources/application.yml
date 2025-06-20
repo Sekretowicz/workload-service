@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: workload-service
+  activemq:
+    user: admin
+    password: admin
+    broker-url: tcp://localhost:61616
 
 jwt:
   secret: veryStrongSecretKeyForJwtGeneration1234567890
