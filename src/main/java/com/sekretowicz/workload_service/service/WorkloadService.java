@@ -9,7 +9,13 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 
+/* This service is responsible for managing the workload of trainers.
+ * It processes incoming workload data and provides monthly workload summaries.
+ *
+ * @deprecated Use {@link com.sekretowicz.workload_service.mongo.service.TrainerSummaryService} instead.
+ */
 @Service
+@Deprecated
 public class WorkloadService{
 
     @Getter

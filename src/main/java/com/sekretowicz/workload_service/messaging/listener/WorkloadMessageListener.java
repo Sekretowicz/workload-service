@@ -1,32 +1,35 @@
 package com.sekretowicz.workload_service.messaging.listener;
 
 import com.sekretowicz.workload_service.dto.WorkloadDto;
+import com.sekretowicz.workload_service.messaging.config.JmsConfig;
+import com.sekretowicz.workload_service.mongo.service.TrainerSummaryService;
 import com.sekretowicz.workload_service.service.WorkloadDtoValidator;
-import com.sekretowicz.workload_service.service.WorkloadService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class WorkloadMessageListener {
-    @Autowired
-    private WorkloadService workloadService;
-    @Autowired
-    private JmsTemplate jmsTemplate;
-    @Autowired
-    private WorkloadDtoValidator validator;
 
-    @JmsListener(destination = "workload.queue")
+    private final TrainerSummaryService trainerSummaryService;
+    private final WorkloadDtoValidator validator;
+
+    @JmsListener(destination = JmsConfig.WORKLOAD_QUEUE)
     public void handle(WorkloadDto dto) {
+        String transactionId = UUID.randomUUID().toString();
+
         if (!validator.isValid(dto)) {
-            log.warn("Invalid workload message received: {}", dto);
+            log.warn("Transaction [{}]: Invalid workload message received: {}", transactionId, dto);
             throw new IllegalArgumentException("Invalid workload message: " + dto);
         }
 
-        log.info("Received workload message: {}", dto);
-        workloadService.processWorkload(dto);
+        log.info("Transaction [{}]: Received workload message: {}", transactionId, dto);
+
+        trainerSummaryService.processTrainingEvent(dto, transactionId);
     }
 }

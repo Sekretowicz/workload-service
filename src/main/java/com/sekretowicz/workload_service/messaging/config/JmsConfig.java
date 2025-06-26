@@ -15,6 +15,8 @@ import java.util.Map;
 @Configuration
 @EnableJms
 public class JmsConfig {
+    public static final String WORKLOAD_QUEUE = "workload.queue";
+
     @Bean
     public MessageConverter messageConverter(ObjectMapper objectMapper) {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();

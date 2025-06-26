@@ -8,3 +8,8 @@ spring:
     user: admin
     password: admin
     broker-url: tcp://localhost:61616
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: trainer_summary_db
