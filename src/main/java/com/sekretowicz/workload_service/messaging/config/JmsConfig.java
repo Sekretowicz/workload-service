@@ -1,7 +1,7 @@
 package com.sekretowicz.workload_service.messaging.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sekretowicz.workload_service.dto.WorkloadDto;
+import com.sekretowicz.workload_service.messaging.dto.WorkloadDto;
 import jakarta.jms.ConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

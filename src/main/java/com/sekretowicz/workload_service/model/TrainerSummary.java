@@ -1,4 +1,4 @@
-package com.sekretowicz.workload_service.mongo.model;
+package com.sekretowicz.workload_service.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -10,7 +10,6 @@ import java.util.List;
 @Document(collection = "trainer_summaries")
 @Data
 public class TrainerSummary {
-
     @Id
     private String id;
     private String username;
@@ -23,6 +22,4 @@ public class TrainerSummary {
 
     private boolean status;
     private List<YearSummary> years;
-
-    // Getters, Setters, Constructors
 }

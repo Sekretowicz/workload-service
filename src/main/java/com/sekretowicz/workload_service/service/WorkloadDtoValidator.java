@@ -1,6 +1,6 @@
 package com.sekretowicz.workload_service.service;
 
-import com.sekretowicz.workload_service.dto.WorkloadDto;
+import com.sekretowicz.workload_service.messaging.dto.WorkloadDto;
 import org.springframework.stereotype.Service;
 
 @Service

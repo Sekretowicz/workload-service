@@ -1,6 +1,6 @@
-package com.sekretowicz.workload_service.mongo.repo;
+package com.sekretowicz.workload_service.repo;
 
-import com.sekretowicz.workload_service.mongo.model.TrainerSummary;
+import com.sekretowicz.workload_service.model.TrainerSummary;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

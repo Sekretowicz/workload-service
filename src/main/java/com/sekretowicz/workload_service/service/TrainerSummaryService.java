@@ -1,11 +1,10 @@
-package com.sekretowicz.workload_service.mongo.service;
+package com.sekretowicz.workload_service.service;
 
-import com.sekretowicz.workload_service.dto.WorkloadDto;
-import com.sekretowicz.workload_service.mongo.dto.TrainingEventDto;
-import com.sekretowicz.workload_service.mongo.model.MonthSummary;
-import com.sekretowicz.workload_service.mongo.model.TrainerSummary;
-import com.sekretowicz.workload_service.mongo.model.YearSummary;
-import com.sekretowicz.workload_service.mongo.repo.TrainerSummaryRepo;
+import com.sekretowicz.workload_service.messaging.dto.WorkloadDto;
+import com.sekretowicz.workload_service.model.MonthSummary;
+import com.sekretowicz.workload_service.model.TrainerSummary;
+import com.sekretowicz.workload_service.model.YearSummary;
+import com.sekretowicz.workload_service.repo.TrainerSummaryRepo;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +23,15 @@ public class TrainerSummaryService {
     private final TrainerSummaryRepo repo;
 
     @Transactional
-    public void processTrainingEvent(TrainingEventDto dto, String transactionId) {
-        log.info("Transaction [{}]: Processing training event for username: {}", transactionId, dto.getUsername());
+    public void processTrainingEvent(WorkloadDto dto, String transactionId) {
+        log.info("Transaction [{}]: Processing training event for username: {}", transactionId, dto.getTrainerUsername());
 
-        TrainerSummary summary = repo.findByUsername(dto.getUsername()).orElseGet(() -> {
+        TrainerSummary summary = repo.findByUsername(dto.getTrainerUsername()).orElseGet(() -> {
             TrainerSummary newSummary = new TrainerSummary();
-            newSummary.setUsername(dto.getUsername());
+            newSummary.setUsername(dto.getTrainerUsername());
             newSummary.setFirstName(dto.getFirstName());
             newSummary.setLastName(dto.getLastName());
-            newSummary.setStatus(dto.isStatus());
+            newSummary.setStatus(dto.getActive());
             newSummary.setYears(new ArrayList<>());
             return newSummary;
         });
@@ -68,11 +67,5 @@ public class TrainerSummaryService {
 
         repo.save(summary);
         log.info("Transaction [{}]: Summary updated and saved.", transactionId);
-    }
-
-    //Overloaded method to accept WorkloadDto directly
-    @Transactional
-    public void processTrainingEvent(WorkloadDto dto, String transactionId) {
-        processTrainingEvent(new TrainingEventDto(dto), transactionId);
     }
 }

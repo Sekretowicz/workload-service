@@ -1,9 +1,9 @@
-package com.sekretowicz.workload_service.dto;
+package com.sekretowicz.workload_service.messaging.dto;
 
 import lombok.Data;
 import java.time.LocalDate;
 
-//Renamed from WorkloadRequestDto to WorkloadDto - now used both for REST and JMS
+//Used for messaging between services
 @Data
 public class WorkloadDto {
     private String trainerUsername;
