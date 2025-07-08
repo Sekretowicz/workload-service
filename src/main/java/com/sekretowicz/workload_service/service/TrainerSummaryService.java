@@ -62,7 +62,7 @@ public class TrainerSummaryService {
                     return m;
                 });
 
-        double updatedDuration = monthSummary.getSummaryDuration() + dto.getTrainingDuration();
+        int updatedDuration = monthSummary.getSummaryDuration() + dto.getTrainingDuration();
         monthSummary.setSummaryDuration(updatedDuration);
 
         repo.save(summary);
