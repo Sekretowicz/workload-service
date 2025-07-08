@@ -62,10 +62,18 @@ public class TrainerSummaryService {
                     return m;
                 });
 
-        double updatedDuration = monthSummary.getSummaryDuration() + dto.getTrainingDuration();
+        int updatedDuration = monthSummary.getSummaryDuration();
+        if (dto.getActionType().equals("ADD")) {
+            updatedDuration += dto.getTrainingDuration();
+        } else if (dto.getActionType().equals("DELETE")) {
+            updatedDuration -= dto.getTrainingDuration();
+            if (updatedDuration < 0) {
+                updatedDuration = 0; // Ensure duration does not go negative
+            }
+        } else {
+        }
         monthSummary.setSummaryDuration(updatedDuration);
 
         repo.save(summary);
-        log.info("Transaction [{}]: Summary updated and saved.", transactionId);
     }
 }
